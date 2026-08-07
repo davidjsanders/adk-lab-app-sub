@@ -1,0 +1,34 @@
+# Ignore virtual environment
+.venv/
+
+# Ignore git metadata
+.git/
+.gitignore
+
+# Ignore docker files
+Dockerfile
+.dockerignore
+
+# Ignore documentation and metadata
+GEMINI.md
+README.md
+rubrics.md
+LICENSE
+
+# Ignore tests and local configurations
+tests/
+.env
+.env.example
+.google-agents-cli/
+.adk/
+
+# Ignore Python caches and compilations
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore potential credentials
+*.pem
+*-key.json
+credentials*.json

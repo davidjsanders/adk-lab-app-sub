@@ -216,3 +216,23 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ADK
+.adk/
+
+# Agent CLI specific
+.persist_vector_store
+tests/load_test/.results/*.html
+tests/load_test/.results/*.csv
+.locust_env
+my_env.tfvars
+.saved_chats
+.google-agents-cli/
+
+# A2A Inspector
+tools/a2a-inspector/
+
+# Credentials and private keys
+*.pem
+*-key.json
+credentials*.json

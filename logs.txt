@@ -1,0 +1,122 @@
+2026-08-07 13:18:05,322 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.backend.piping.pipe(['renderer', 'formatter', 'neato_no_op', 'quiet'])
+2026-08-07 13:18:05,323 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.backend.rendering.render(['renderer', 'formatter', 'neato_no_op', 'quiet'])
+2026-08-07 13:18:05,324 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.backend.unflattening.unflatten(['stagger', 'fanout', 'chain', 'encoding'])
+2026-08-07 13:18:05,325 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.backend.viewing.view(['quiet'])
+2026-08-07 13:18:05,330 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.quoting.quote(['is_html_string', 'is_valid_id', 'dot_keywords', 'endswith_odd_number_of_backslashes', 'escape_unescaped_quotes'])
+2026-08-07 13:18:05,330 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.quoting.a_list(['kwargs', 'attributes'])
+2026-08-07 13:18:05,330 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.quoting.attr_list(['kwargs', 'attributes'])
+2026-08-07 13:18:05,330 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.dot.Dot.clear(['self', 'keep_attrs'])
+2026-08-07 13:18:05,330 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.dot.Dot.__iter__(['self', 'subgraph'])
+2026-08-07 13:18:05,331 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.dot.Dot.node(['label', '_attributes'])
+2026-08-07 13:18:05,331 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.dot.Dot.edge(['label', '_attributes'])
+2026-08-07 13:18:05,331 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.dot.Dot.attr(['kw', '_attributes'])
+2026-08-07 13:18:05,331 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.dot.Dot.subgraph(['graph', 'name', 'comment', 'graph_attr', 'node_attr', 'edge_attr', 'body'])
+2026-08-07 13:18:05,332 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.piping.Pipe._pipe_legacy(['format', 'renderer', 'formatter', 'neato_no_op', 'quiet'])
+2026-08-07 13:18:05,334 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.saving.Save.save(['filename', 'directory'])
+2026-08-07 13:18:05,334 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.rendering.Render.render(['filename', 'directory', 'view', 'cleanup', 'format', 'renderer', 'formatter', 'neato_no_op', 'quiet', 'quiet_view'])
+2026-08-07 13:18:05,334 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.rendering.Render.view(['filename', 'directory', 'cleanup', 'quiet', 'quiet_view'])
+2026-08-07 13:18:05,335 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.unflattening.Unflatten.unflatten(['self', 'stagger', 'fanout', 'chain'])
+2026-08-07 13:18:05,335 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.graphs.BaseGraph.__init__(['name', 'comment', 'filename', 'directory', 'format', 'engine', 'encoding', 'graph_attr', 'node_attr', 'edge_attr', 'body', 'strict'])
+2026-08-07 13:18:05,336 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.sources.Source.from_file(['filename', 'directory', 'format', 'engine', 'encoding', 'renderer', 'formatter'])
+2026-08-07 13:18:05,337 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.sources.Source.__init__(['source', 'filename', 'directory', 'format', 'engine', 'encoding'])
+2026-08-07 13:18:05,337 - DEBUG - _tools.py:160 - deprecate positional args: graphviz.sources.Source.save(['filename', 'directory'])
+2026-08-07 13:18:05,388 - DEBUG - service_registry.py:231 - services.py not found in /usr/local/google/home/djsanders/dev/adk-lab-app-sub, skipping.
+2026-08-07 13:18:05,388 - INFO - service_factory.py:266 - Using in-memory memory service
+2026-08-07 13:18:05,388 - INFO - service_factory.py:189 - Using session service URI: memory:
+2026-08-07 13:18:05,389 - INFO - local_storage.py:121 - Using per-agent artifact storage rooted at /usr/local/google/home/djsanders/dev/adk-lab-app-sub
+/usr/local/google/home/djsanders/dev/adk-lab-app-sub/.venv/lib/python3.12/site-packages/google/adk/cli/fast_api.py:567: UserWarning: [EXPERIMENTAL] InMemoryCredentialService: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
+  credential_service = InMemoryCredentialService()
+/usr/local/google/home/djsanders/dev/adk-lab-app-sub/.venv/lib/python3.12/site-packages/google/adk/auth/credential_service/in_memory_credential_service.py:33: UserWarning: [EXPERIMENTAL] BaseCredentialService: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
+  super().__init__()
+2026-08-07 13:18:05,751 - DEBUG - selector_events.py:64 - Using selector: EpollSelector
+INFO:     Started server process [612013]
+INFO:     Waiting for application startup.
+
++-----------------------------------------------------------------------------+
+| ADK Web Server started                                                      |
+|                                                                             |
+| For local testing, access at http://127.0.0.1:8000.                         |
++-----------------------------------------------------------------------------+
+
+2026-08-07 13:18:05,774 - DEBUG - _metrics_collector.py:160 - Initialized ADK metrics collector with session 7fc92d62-a26f-4dce-9459-1ea441d8a8a2 (seq 0)
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2026-08-07 13:18:07,336 - DEBUG - _nested_agent_loader.py:180 - Loading agent app - not in cache.
+2026-08-07 13:18:07,336 - DEBUG - _nested_agent_loader.py:216 - Loading .env for agent app from /usr/local/google/home/djsanders/dev/adk-lab-app-sub
+2026-08-07 13:18:07,338 - INFO - envs.py:83 - Loaded .env file for app at /usr/local/google/home/djsanders/dev/adk-lab-app-sub/.env
+2026-08-07 13:18:07,339 - DEBUG - agent_loader.py:137 - Module app has no root_agent. Trying next pattern.
+/usr/local/google/home/djsanders/dev/adk-lab-app-sub/.venv/lib/python3.12/site-packages/google/adk/features/_feature_decorator.py:72: UserWarning: [EXPERIMENTAL] feature FeatureName.PLUGGABLE_AUTH is enabled.
+  check_feature_enabled()
+2026-08-07 13:18:07,713 - DEBUG - telemetry.py:205 - Start tracing for a2a.utils.helpers.create_task_obj, is_async_func False
+2026-08-07 13:18:07,713 - DEBUG - telemetry.py:205 - Start tracing for a2a.utils.helpers.append_artifact_to_task, is_async_func False
+2026-08-07 13:18:07,714 - DEBUG - telemetry.py:346 - Trace all class None, None
+2026-08-07 13:18:07,714 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.event_queue.EventQueue.clear_events, is_async_func True
+2026-08-07 13:18:07,714 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.event_queue.EventQueue.close, is_async_func True
+2026-08-07 13:18:07,715 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.event_queue.EventQueue.dequeue_event, is_async_func True
+2026-08-07 13:18:07,715 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.event_queue.EventQueue.enqueue_event, is_async_func True
+2026-08-07 13:18:07,715 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.event_queue.EventQueue.is_closed, is_async_func False
+2026-08-07 13:18:07,715 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.event_queue.EventQueue.tap, is_async_func False
+2026-08-07 13:18:07,715 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.event_queue.EventQueue.task_done, is_async_func False
+2026-08-07 13:18:07,716 - DEBUG - telemetry.py:346 - Trace all class None, None
+2026-08-07 13:18:07,716 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.event_consumer.EventConsumer.agent_task_callback, is_async_func False
+2026-08-07 13:18:07,716 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.event_consumer.EventConsumer.consume_all, is_async_func False
+2026-08-07 13:18:07,716 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.event_consumer.EventConsumer.consume_one, is_async_func True
+2026-08-07 13:18:07,717 - DEBUG - telemetry.py:346 - Trace all class None, None
+2026-08-07 13:18:07,717 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.in_memory_queue_manager.InMemoryQueueManager.add, is_async_func True
+2026-08-07 13:18:07,717 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.in_memory_queue_manager.InMemoryQueueManager.close, is_async_func True
+2026-08-07 13:18:07,717 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.in_memory_queue_manager.InMemoryQueueManager.create_or_tap, is_async_func True
+2026-08-07 13:18:07,717 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.in_memory_queue_manager.InMemoryQueueManager.get, is_async_func True
+2026-08-07 13:18:07,717 - DEBUG - telemetry.py:205 - Start tracing for a2a.server.events.in_memory_queue_manager.InMemoryQueueManager.tap, is_async_func True
+2026-08-07 13:18:07,722 - DEBUG - telemetry.py:346 - Trace all class None, None
+2026-08-07 13:18:07,722 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.jsonrpc.JsonRpcTransport._apply_interceptors, is_async_func True
+2026-08-07 13:18:07,722 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.jsonrpc.JsonRpcTransport._get_http_args, is_async_func False
+2026-08-07 13:18:07,723 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.jsonrpc.JsonRpcTransport._send_request, is_async_func True
+2026-08-07 13:18:07,723 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.jsonrpc.JsonRpcTransport.cancel_task, is_async_func True
+2026-08-07 13:18:07,723 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.jsonrpc.JsonRpcTransport.close, is_async_func True
+2026-08-07 13:18:07,723 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.jsonrpc.JsonRpcTransport.get_card, is_async_func True
+2026-08-07 13:18:07,723 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.jsonrpc.JsonRpcTransport.get_task, is_async_func True
+2026-08-07 13:18:07,723 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.jsonrpc.JsonRpcTransport.get_task_callback, is_async_func True
+2026-08-07 13:18:07,723 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.jsonrpc.JsonRpcTransport.resubscribe, is_async_func False
+2026-08-07 13:18:07,723 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.jsonrpc.JsonRpcTransport.send_message, is_async_func True
+2026-08-07 13:18:07,723 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.jsonrpc.JsonRpcTransport.send_message_streaming, is_async_func False
+2026-08-07 13:18:07,723 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.jsonrpc.JsonRpcTransport.set_task_callback, is_async_func True
+2026-08-07 13:18:07,727 - DEBUG - telemetry.py:346 - Trace all class None, None
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport._apply_interceptors, is_async_func True
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport._get_http_args, is_async_func False
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport._prepare_send_message, is_async_func True
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport._send_get_request, is_async_func True
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport._send_post_request, is_async_func True
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport._send_request, is_async_func True
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport.cancel_task, is_async_func True
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport.close, is_async_func True
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport.get_card, is_async_func True
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport.get_task, is_async_func True
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport.get_task_callback, is_async_func True
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport.resubscribe, is_async_func False
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport.send_message, is_async_func True
+2026-08-07 13:18:07,730 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport.send_message_streaming, is_async_func False
+2026-08-07 13:18:07,731 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.rest.RestTransport.set_task_callback, is_async_func True
+2026-08-07 13:18:07,732 - DEBUG - telemetry.py:346 - Trace all class None, None
+2026-08-07 13:18:07,732 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.grpc.GrpcTransport._get_grpc_metadata, is_async_func False
+2026-08-07 13:18:07,732 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.grpc.GrpcTransport.cancel_task, is_async_func True
+2026-08-07 13:18:07,732 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.grpc.GrpcTransport.close, is_async_func True
+2026-08-07 13:18:07,732 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.grpc.GrpcTransport.get_card, is_async_func True
+2026-08-07 13:18:07,732 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.grpc.GrpcTransport.get_task, is_async_func True
+2026-08-07 13:18:07,732 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.grpc.GrpcTransport.get_task_callback, is_async_func True
+2026-08-07 13:18:07,732 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.grpc.GrpcTransport.resubscribe, is_async_func False
+2026-08-07 13:18:07,732 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.grpc.GrpcTransport.send_message, is_async_func True
+2026-08-07 13:18:07,733 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.grpc.GrpcTransport.send_message_streaming, is_async_func False
+2026-08-07 13:18:07,733 - DEBUG - telemetry.py:205 - Start tracing for a2a.client.transports.grpc.GrpcTransport.set_task_callback, is_async_func True
+2026-08-07 13:18:08,284 - INFO - sysman-agent.agent - Starting SysMan Agent in role: AgentRoles.SPECIALIST
+2026-08-07 13:18:08,284 - DEBUG - app.classes.registry_helper - Initializing registry helper
+2026-08-07 13:18:08,284 - DEBUG - app.classes.registry_helper - RegistryHelper project_id: agentspace-argolis-demo
+2026-08-07 13:18:08,284 - DEBUG - app.classes.registry_helper - RegistryHelper location: us-central1
+2026-08-07 13:18:09,419 - DEBUG - app.classes.registry_helper - registry initialized?: True
+2026-08-07 13:18:09,419 - DEBUG - app.classes.registry_helper - Looking for mcp: sysman-v2-common-manager
+2026-08-07 13:18:09,823 - DEBUG - app.classes.registry_helper - Found: {'mcpServers': [{'name': 'projects/agentspace-argolis-demo/locations/us-central1/mcpServers/agentregistry-00000000-0000-0000-0d4c-d1bf8dc8d00e', 'displayName': 'Sysman v2 Common Manager', 'description': 'Sysman v2 MCP Server on Cloud Run', 'interfaces': [{'url': 'https://sysman-v2-mcp-server-63466983700.us-central1.run.app/mcp', 'protocolBinding': 'JSONRPC'}], 'tools': [{'name': 'list_systems', 'description': 'Lists all registered virtual systems in the fleet.\n\nReturns:\n    List of SystemMetadata models containing system details.'}, {'name': 'get_system_status', 'description': 'Queries detailed status, metrics, and health of a specific system.'}, {'name': 'execute_system_command', 'description': 'Sends lifecycle restarts, Garbage Collection, websocket reconnects or fault injections.'}, {'name': 'get_system_logs', 'description': 'Retrieves recent syslog or application logs for the requested system.'}, {'name': 'render_system_card', 'description': 'Renders a native A2UI v0.8 interactive system operations status card.'}, {'name': 'render_system_logs_card', 'description': 'Renders a native A2UI v0.8 interactive diagnostics logs card for the target system.'}], 'createTime': '2026-08-06T19:01:32.545550Z', 'updateTime': '2026-08-06T19:01:32.545550Z', 'attributes': {'agentregistry.googleapis.com/system/RuntimeReference': {'uri': '//agentregistry.googleapis.com/projects/63466983700/locations/us-central1/services/sysman-v2-common-manager'}}, 'mcpServerId': 'urn:mcp:projects-63466983700:projects:63466983700:locations:us-central1:agentregistry:services:sysman-v2-common-manager'}]}
+2026-08-07 13:18:09,824 - WARNING - google_adk.google.adk.auth.credential_manager - An auth provider is already registered for scheme <class 'google.adk.integrations.agent_identity.gcp_auth_provider_scheme.GcpAuthProviderScheme'>. Ignoring the new provider.
+2026-08-07 13:18:09,824 - DEBUG - app.classes.registry_helper - Looking up MCP: projects/agentspace-argolis-demo/locations/us-central1/mcpServers/agentregistry-00000000-0000-0000-0d4c-d1bf8dc8d00e
+2026-08-07 13:18:10,034 - DEBUG - google_adk.google.adk.cli.utils.agent_loader - Found app in app.agent
+2026-08-07 13:18:10,035 - INFO - google_adk.google.adk.plugins.plugin_manager - Plugin 'a2ui_plugin' registered.
+INFO:     127.0.0.1:51548 - "POST /run_sse HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51548 - "GET /dev/apps/app/debug/trace/session/3dbcc6dc-d296-41d4-b455-4835d57b867c HTTP/1.1" 200 OK
