@@ -239,50 +239,20 @@ class RegistryHelper:
                     )
 
                 case RegistryResourceType.MCP:
+                    CredentialManager.register_auth_provider(GcpAuthProvider())
                     registered_name = self._full_resource_id(
                         registered_name,
                         RegistryResourceType.MCP
                     )
                     logger.debug("Looking up MCP: %s", registered_name)
-
-                    use_dynamic_adc = os.environ.get("USE_ADK_DYNAMIC_ADC_AUTH", "true").lower() == "true"
-
-                    auth_scheme = None
-                    auth_credential = None
-
-                    if use_dynamic_adc:
-                        try:
-                            server_details = self.registry.get_mcp_server(registered_name)
-                            endpoint_uri, _, _ = self.registry._get_connection_uri(server_details)
-                            
-                            from app.helpers.mcp_auth_helper import get_mcp_auth
-                            auth_scheme, auth_credential = get_mcp_auth(endpoint_uri)
-                            
-                            if not auth_scheme:
-                                CredentialManager.register_auth_provider(GcpAuthProvider())
-                        except Exception as e:
-                            logger.warning(
-                                "Failed to configure custom ADK auth for MCP server '%s', falling back: %s", 
-                                registered_name, 
-                                e
-                            )
-                            CredentialManager.register_auth_provider(GcpAuthProvider())
-                    else:
-                        logger.info("Using standard GCP Auth Provider for MCP server (dynamic auth disabled)")
-                        CredentialManager.register_auth_provider(GcpAuthProvider())
-
                     # Returns McpToolset containing all registered tools on the server
                     if continue_uri:
                         return self.registry.get_mcp_toolset(
                             registered_name,
-                            auth_scheme=auth_scheme,
-                            auth_credential=auth_credential,
                             continue_uri=continue_uri
                         )
                     return self.registry.get_mcp_toolset(
-                        registered_name,
-                        auth_scheme=auth_scheme,
-                        auth_credential=auth_credential
+                        registered_name
                     )
 
                 case RegistryResourceType.ENDPOINT:

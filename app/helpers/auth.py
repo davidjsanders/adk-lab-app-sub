@@ -30,3 +30,5 @@ def get_authenticated_client(service_url: str, timeout: httpx.Timeout | None = N
         auth=GoogleCloudRunAuth(audience),
         timeout=resolved_timeout
     )
+
+
