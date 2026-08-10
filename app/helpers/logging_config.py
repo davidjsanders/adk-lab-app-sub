@@ -1,21 +1,37 @@
 import json
 import logging
+import re
+
+
+def redact_pii(text: str) -> str:
+    """Redact sensitive PII and auth tokens from log strings."""
+    if not isinstance(text, str):
+        return text
+    # Redact email addresses
+    text = re.sub(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}", "[REDACTED_EMAIL]", text)
+    # Redact Bearer tokens and secret keys
+    text = re.sub(r"(Bearer\s+)[A-Za-z0-9\-\._~\+\/]+=*", r"\1[REDACTED_TOKEN]", text)
+    text = re.sub(r"(key|secret|password|token)=\"[^\"]+\"", r'\1="[REDACTED]"', text, flags=re.IGNORECASE)
+    return text
 
 
 class JsonFormatter(logging.Formatter):
-    """Structured JSON log formatter for enhanced observability and tracing."""
+    """Structured JSON log formatter with PII redaction and Intent-vs-Outcome tracking for observability."""
 
     def format(self, record: logging.LogRecord) -> str:
+        msg = redact_pii(record.getMessage())
         log_obj = {
             "timestamp": self.formatTime(record, self.datefmt),
             "level": record.levelname,
             "logger": record.name,
-            "message": record.getMessage(),
+            "message": msg,
             "module": record.module,
             "line": record.lineno,
+            "intent": getattr(record, "intent", "N/A"),
+            "outcome": getattr(record, "outcome", "N/A"),
         }
         if record.exc_info:
-            log_obj["exception"] = self.formatException(record.exc_info)
+            log_obj["exception"] = redact_pii(self.formatException(record.exc_info))
         return json.dumps(log_obj)
 
 
