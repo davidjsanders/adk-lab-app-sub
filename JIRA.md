@@ -1,0 +1,1 @@
+CONTINUE_URI=http://127.0.0.1:8080/dev-ui/index.html LOG_LEVEL=debug AGENT_ROLE="specialist" AGENT_CONFIG_FILE="jira-prd.json" uv run agents-cli playground 2>&1 | tee logs.txt

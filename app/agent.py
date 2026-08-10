@@ -33,8 +33,8 @@ CredentialManager.register_auth_provider(GcpAuthProvider())
 
 # Patch CredentialManager to work around ADK pre-auth bugs
 # See the readme in the patches/ folder.
-# patch_credential_manager()
-# patch_finalize_credentials()
+patch_credential_manager()
+patch_finalize_credentials()
 
 # Shared A2UI Plugin instance for handling A2UI Components
 a2ui_plugin = A2UIPlugin()

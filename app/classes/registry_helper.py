@@ -246,6 +246,7 @@ class RegistryHelper:
                     logger.debug("Looking up MCP: %s", registered_name)
 
                     use_dynamic_adc = os.environ.get("USE_ADK_DYNAMIC_ADC_AUTH", "true").lower() == "true"
+                    logger.debug("MCP auth resolution - USE_ADK_DYNAMIC_ADC_AUTH: %s", use_dynamic_adc)
 
                     auth_scheme = None
                     auth_credential = None
@@ -254,11 +255,14 @@ class RegistryHelper:
                         try:
                             server_details = self.registry.get_mcp_server(registered_name)
                             endpoint_uri, _, _ = self.registry._get_connection_uri(server_details)
-                            
+                            logger.debug("Resolved MCP endpoint_uri for dynamic auth: %s", endpoint_uri)
+
                             from app.helpers.mcp_auth_helper import get_mcp_auth
                             auth_scheme, auth_credential = get_mcp_auth(endpoint_uri)
-                            
+                            logger.debug("get_mcp_auth returned auth_scheme: %s, auth_credential: %s", auth_scheme, auth_credential)
+
                             if not auth_scheme:
+                                logger.debug("No custom auth_scheme returned; registering default GcpAuthProvider")
                                 CredentialManager.register_auth_provider(GcpAuthProvider())
                         except Exception as e:
                             logger.warning(
@@ -271,7 +275,45 @@ class RegistryHelper:
                         logger.info("Using standard GCP Auth Provider for MCP server (dynamic auth disabled)")
                         CredentialManager.register_auth_provider(GcpAuthProvider())
 
+                        # Manually configure the GcpAuthProviderScheme for local testing
+                        from google.adk.integrations.agent_identity import GcpAuthProviderScheme
+                        auth_scheme = GcpAuthProviderScheme(
+                            name=f"projects/{self._project_id}/locations/{self._location}/connectors/sysman-oauth",
+                            scopes=["https://www.googleapis.com/auth/cloud-platform"],
+                            continue_uri=os.environ.get("CONTINUE_URI", "http://127.0.0.1:8000/oauth-callback"),
+                        )
+                        logger.debug("Configured manual GcpAuthProviderScheme: %s", auth_scheme)
+
+                        # In local dev environment, add X-Serverless-Authorization for Cloud Run IAM transport
+                        impersonate_sa = os.environ.get("IMPERSONATE_SA")
+                        logger.debug("IMPERSONATE_SA env var: %s", impersonate_sa)
+                        if impersonate_sa:
+                            try:
+                                server_details = self.registry.get_mcp_server(registered_name)
+                                endpoint_uri, _, _ = self.registry._get_connection_uri(server_details)
+                                from app.helpers.mcp_auth_helper import generate_impersonated_id_token
+
+                                from urllib.parse import urlparse
+                                parsed_url = urlparse(endpoint_uri)
+                                target_audience = f"{parsed_url.scheme}://{parsed_url.netloc}"
+                                logger.debug("Calculated target_audience for impersonation: %s", target_audience)
+
+                                def _local_header_provider(context):
+                                    logger.debug("Executing _local_header_provider for SA %s (audience: %s)", impersonate_sa, target_audience)
+                                    token = generate_impersonated_id_token(impersonate_sa, target_audience)
+                                    if token:
+                                        logger.debug("Successfully generated impersonated ID token (length: %d)", len(token))
+                                        return {"X-Serverless-Authorization": f"Bearer {token}"}
+                                    logger.warning("Failed to generate impersonated ID token for SA %s", impersonate_sa)
+                                    return {}
+
+                                self.registry._header_provider = _local_header_provider
+                                logger.info("Configured X-Serverless-Authorization header provider for local Cloud Run transport (audience: %s)", target_audience)
+                            except Exception as e:
+                                logger.warning("Could not set local transport header provider: %s", e)
+
                     # Returns McpToolset containing all registered tools on the server
+                    logger.debug("Retrieving McpToolset for %s (auth_scheme=%s, continue_uri=%s)", registered_name, auth_scheme, continue_uri)
                     if continue_uri:
                         return self.registry.get_mcp_toolset(
                             registered_name,

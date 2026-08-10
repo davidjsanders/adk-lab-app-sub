@@ -28,6 +28,12 @@ def generate_impersonated_id_token(impersonate_sa: str, audience: str) -> str:
     from google.auth.transport.requests import Request
     import requests
 
+    parsed_url = urlparse(audience)
+    if parsed_url.scheme and parsed_url.netloc:
+        target_audience = f"{parsed_url.scheme}://{parsed_url.netloc}"
+    else:
+        target_audience = audience
+
     credentials, _ = google.auth.default()
     auth_request = Request()
     credentials.refresh(auth_request)
@@ -38,7 +44,7 @@ def generate_impersonated_id_token(impersonate_sa: str, audience: str) -> str:
         "Content-Type": "application/json",
     }
     body = {
-        "audience": audience,
+        "audience": target_audience,
         "includeEmail": True,
     }
     response = requests.post(url, json=body, headers=headers, timeout=10)
