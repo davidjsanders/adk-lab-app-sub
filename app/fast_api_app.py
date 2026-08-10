@@ -35,16 +35,23 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     yield
 
 
-# Initialize standard ADK FastAPI application
+# Initialize standard ADK FastAPI application with OpenTelemetry tracing enabled
 app: FastAPI = get_fast_api_app(
     agents_dir=AGENT_DIR,
     web=True,
     artifact_service_uri=services.ARTIFACT_SERVICE_URI,
     session_service_uri=services.SESSION_SERVICE_URI,
-    otel_to_cloud=False,
+    otel_to_cloud=os.environ.get("ENABLE_OTEL_TRACING", "true").lower() == "true",
     a2a=True,
     lifespan=lifespan,
 )
 
 app.title = "sysman-ops-agent"
 app.description = "API endpoint for interacting with the SysMan Operations ADK Agent"
+
+from app.app_utils.typing import Feedback
+
+@app.post("/feedback")
+async def collect_feedback(feedback: Feedback):
+    """Collects user feedback for conversation sessions."""
+    return {"status": "success", "feedback": feedback.model_dump()}

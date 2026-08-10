@@ -84,12 +84,40 @@ class SpecialistAgent(Agent):
         # )
         # agent_tools.append(system_skills)
 
-        if config.subagents:
-            subagent_helper = SubagentHelper(
-                settings=settings,
-                subagents=config.subagents
-            )
-            sub_agents = subagent_helper.get_subagents()
+        async def combined_before_agent_callback(callback_context):
+            """Executes state loading and dynamic model routing before agent execution."""
+            await specialist_state_loader(callback_context, target_systems=config.target_systems)
+            # Dynamic Model Routing: Route to Pro model for complex planning/remediation tasks
+            state = getattr(callback_context, "state", {})
+            user_content = getattr(callback_context, "user_content", None)
+            user_text = ""
+            if user_content and hasattr(user_content, "parts") and user_content.parts:
+                user_text = " ".join([p.text for p in user_content.parts if hasattr(p, "text") and p.text])
+            elif state and "user_prompt" in state:
+                user_text = str(state.get("user_prompt", ""))
+
+            complex_keywords = ["remediate", "plan", "root cause", "architecture", "debug", "analyze"]
+            agent_obj = getattr(callback_context, "agent", None) or getattr(callback_context, "node", None)
+            if agent_obj and hasattr(agent_obj, "model"):
+                target_model_name = settings.pro_model if any(kw in user_text.lower() for kw in complex_keywords) else settings.fast_model
+                current_model_name = getattr(agent_obj.model, "model", "")
+                if current_model_name != target_model_name:
+                    logger.info("Dynamic Model Routing: Switching model from %s to %s", current_model_name, target_model_name)
+                    agent_obj.model = GlobalGemini(model=target_model_name)
+
+        async def human_in_the_loop_tool_callback(tool, args, tool_context=None):
+            """Human-in-the-Loop hook requiring explicit operator confirmation before executing destructive operations."""
+            high_stakes_keywords = ["restart", "reboot", "delete", "drop", "purge", "kill"]
+            tool_name = getattr(tool, "name", str(tool)).lower()
+            if any(keyword in tool_name for keyword in high_stakes_keywords):
+                state = getattr(tool_context, "state", {}) if tool_context else {}
+                if not state.get("human_approval_granted", False):
+                    logger.warning("Human-in-the-Loop Hook: High-stakes action '%s' requires human confirmation", tool_name)
+                    return (
+                        f"STOP: High-stakes action '{tool_name}' requires explicit human operator confirmation. "
+                        "Please ask the human operator for confirmation before proceeding."
+                    )
+            return None
 
         # 3. Initialize the ADK Agent
         super().__init__(
@@ -99,5 +127,6 @@ class SpecialistAgent(Agent):
             instruction=config.instruction,
             tools=agent_tools,
             sub_agents=sub_agents,
-            before_agent_callback=partial(specialist_state_loader, target_systems=config.target_systems),
+            before_agent_callback=combined_before_agent_callback,
+            before_tool_callback=human_in_the_loop_tool_callback,
         )
