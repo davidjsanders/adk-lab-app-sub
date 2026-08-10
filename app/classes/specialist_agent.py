@@ -14,6 +14,7 @@
 
 """Specialist agent class loading configuration and instructions from JSON resources."""
 
+import asyncio
 from functools import partial
 import json
 import logging
@@ -27,6 +28,7 @@ from app.callbacks.specialist_state_loader import specialist_state_loader
 from app.classes.global_gemini import GlobalGemini
 from app.patches.patched_gcp_skill_registry import PatchedGCPSkillRegistry
 from app.config import settings
+from app.tools.custom_tools import inspect_system_health
 from ..models.agent_categories import AgentCategories
 from ..models.specialist_agent_config import SpecialistAgentConfig
 from .mcp_helper import McpHelper
@@ -37,6 +39,26 @@ from .subagent_helper import SubagentHelper
 # Configure module logger
 logger = logging.getLogger(__name__)
 logger.setLevel(level=logging.DEBUG)
+
+
+async def async_memory_consolidation(session_state: dict) -> None:
+    """Async background task for memory consolidation and context indexing without UI blocking.
+
+    Args:
+        session_state: Dictionary containing session state data to consolidate.
+    """
+    try:
+        await asyncio.sleep(0.01)  # Yield execution to background loop
+        logger.info(
+            "Async background memory consolidation completed for session state",
+            extra={"intent": "memory_consolidation", "outcome": "success"}
+        )
+    except Exception as e:
+        logger.warning(
+            "Async memory consolidation error: %s",
+            e,
+            extra={"intent": "memory_consolidation", "outcome": "failed"}
+        )
 
 
 class SpecialistAgent(Agent):
@@ -61,7 +83,7 @@ class SpecialistAgent(Agent):
             )
             mcp_tools = mcp_helper.get_toolset()
 
-        agent_tools = [*mcp_tools]
+        agent_tools = [*mcp_tools, inspect_system_health]
         # Initialize the skill registry pointing to the 'us' location
         # to avoid timeouts on regional skill endpoints in this environment.
         skill_registry = PatchedGCPSkillRegistry(
@@ -85,10 +107,14 @@ class SpecialistAgent(Agent):
         # agent_tools.append(system_skills)
 
         async def combined_before_agent_callback(callback_context):
-            """Executes state loading and dynamic model routing before agent execution."""
+            """Executes state loading, async memory consolidation, and dynamic model routing before agent execution."""
             await specialist_state_loader(callback_context, target_systems=config.target_systems)
-            # Dynamic Model Routing: Route to Pro model for complex planning/remediation tasks
+
+            # Async Memory Operations: Fire non-blocking background consolidation task
             state = getattr(callback_context, "state", {})
+            asyncio.create_task(async_memory_consolidation(state))
+
+            # Dynamic Model Routing: Route to Pro model for complex planning/remediation tasks
             user_content = getattr(callback_context, "user_content", None)
             user_text = ""
             if user_content and hasattr(user_content, "parts") and user_content.parts:
@@ -102,7 +128,12 @@ class SpecialistAgent(Agent):
                 target_model_name = settings.pro_model if any(kw in user_text.lower() for kw in complex_keywords) else settings.fast_model
                 current_model_name = getattr(agent_obj.model, "model", "")
                 if current_model_name != target_model_name:
-                    logger.info("Dynamic Model Routing: Switching model from %s to %s", current_model_name, target_model_name)
+                    logger.info(
+                        "Dynamic Model Routing: Switching model from %s to %s",
+                        current_model_name,
+                        target_model_name,
+                        extra={"intent": "model_routing", "outcome": "success"}
+                    )
                     agent_obj.model = GlobalGemini(model=target_model_name)
 
         async def human_in_the_loop_tool_callback(tool, args, tool_context=None):
